@@ -1,5 +1,5 @@
 <?php session_start();
-$mysqli = new mysqli('localhost', 'root', 'root', 'mrfish') or die(mysqli_error($mysqli));
+require('/home/phpprogr/domains/phpprogrammer.in.ua/public_html/test/connect.php');
 $result = $mysqli->query("SELECT * FROM partners") or die($mysqli->error);
 
 if (isset($_GET['delete'])) {
@@ -8,14 +8,51 @@ if (isset($_GET['delete'])) {
 
     $_SESSION['message'] = "Record has been deleted";
     $_SESSION['msg_type'] = "danger";
-    header('Location: /TZ/');
+    header('Location: /');
 } else {
 }
+$sort_list = array(
+	'id_asc'   => '`id`',
+	'id_desc'  => '`id` DESC',
+	'name_asc'  => '`name`',
+	'name_desc' => '`name` DESC',
+	'surname_asc'  => '`surname`',
+	'surname_desc' => '`surname` DESC',
+	'total_hours_asc'   => '`total_hours`',
+	'total_hours_desc'  => '`total_hours` DESC',
+	'status_asc'   => '`status`',
+	'status_desc'  => '`status` DESC',   
+);
+$sort = @$_GET['sort'];
+if (array_key_exists($sort, $sort_list)) {
+	$sort_sql = $sort_list[$sort];
+} else {
+	$sort_sql = reset($sort_list);
+}
 
-$limit = isset($_POST["limit-records"]) ? $_POST["limit-records"] : 5;
+
+$sth = $mysqli->prepare("SELECT * FROM `partners` ORDER BY {$sort_sql}");
+
+/* Функция вывода ссылок */
+function sort_link_th($title, $a, $b) {
+	$sort = @$_GET['sort'];
+ 
+	if ($sort == $a) {
+		return '<a class="active" href="?sort=' . $b . '">' . $title . ' <i>▲</i></a>';
+	} elseif ($sort == $b) {
+		return '<a class="active" href="?sort=' . $a . '">' . $title . ' <i>▼</i></a>';  
+	} else {
+		return '<a href="?sort=' . $a . '">' . $title . '</a>';  
+	}
+}
+
+
+
+
+$limit = isset($_POST["limit-records"]) ? $_POST["limit-records"] : 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
-$result = $mysqli->query("SELECT * FROM partners LIMIT $start, $limit");
+$result = $mysqli->query("SELECT * FROM partners ORDER BY {$sort_sql} LIMIT $start, $limit");
 $partners = $result->fetch_all(MYSQLI_ASSOC);
 
 $result1 = $mysqli->query("SELECT count(id) AS id FROM partners");
@@ -51,10 +88,10 @@ $Next = $page + 1;
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <ul class="nav nav-pills ">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/TZ/">List Partners</a>
+                    <a class="nav-link active" aria-current="page" href="/">List Partners</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/TZ/create.php">Add Partner</a>
+                    <a class="nav-link" href="/create.php">Add Partner</a>
                 </li>
 
             </ul>
@@ -68,11 +105,11 @@ $Next = $page + 1;
             <table id="" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Total Hours</th>
-                        <th>Status</th>
+                        <th><?php echo sort_link_th('Id', 'id_asc', 'id_desc'); ?></th>
+                        <th><?php echo sort_link_th('Name', 'name_asc', 'name_desc'); ?></th>
+                        <th><?php echo sort_link_th('Surname', 'surname_asc', 'surname_desc'); ?></th>
+                        <th><?php echo sort_link_th('Total Hours', 'total_hours_asc', 'total_hours_desc'); ?></th>
+                        <th><?php echo sort_link_th('Status', 'status_asc', 'status_desc'); ?></th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -92,7 +129,7 @@ $Next = $page + 1;
                                 ?>
                             </td>
                             <td>
-                                <a href="index.php?edit=<?php echo $partner['id']; ?>" class="btn btn-info">Edit</a>
+                                <a href="edit.php?id=<?php echo $partner['id']; ?>" class="btn btn-info">Edit</a>
                                 <a href="index.php?delete=<?php echo $partner['id']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
@@ -128,7 +165,7 @@ $Next = $page + 1;
                     <form class="" method="post" action="#">
                         <select class="rounded border border-bottom bg-light" name="limit-records" id="limit-records">
                             <option disabled="disabled" selected="selected">---Limit Records---</option>
-                            <?php foreach ([5, 10, 15, 20, 25] as $limit) : ?>
+                            <?php foreach ([10, 15, 20, 25] as $limit) : ?>
                                 <option <?php if (isset($_POST["limit-records"]) && $_POST["limit-records"] == $limit) echo "selected" ?> value="<?= $limit; ?>"><?= $limit; ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -220,6 +257,7 @@ $Next = $page + 1;
         <!-- Footer -->
     </div>
     <!-- End of .container -->
+    <!-- <?php var_dump($sort_sql); ?> -->
 
 </body>
 

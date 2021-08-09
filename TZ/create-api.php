@@ -1,7 +1,6 @@
 <?php
-require('/OpenServer/domains/mr.fish/TZ/connect.php');
-/* $mysqli = new mysqli('localhost', 'root', 'root', 'mrfish') or die(mysqli_error($mysqli));
- */
+require('/home/phpprogr/domains/phpprogrammer.in.ua/public_html/test/connect.php');
+
 if (isset($_POST['save'])){
     $name = $_POST['name'];
     $surname = $_POST['surname'];
@@ -13,4 +12,4 @@ if (isset($_POST['save'])){
 }
 $mysqli->query("INSERT INTO partners (name, surname, total_hours, status) VALUES('$name', '$surname', '$totalHours', '$status')") or
     die($mysqli->error);
-header('Location: /TZ/');
+header('Location: /');

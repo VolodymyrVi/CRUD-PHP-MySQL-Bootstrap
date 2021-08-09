@@ -12,7 +12,7 @@
     <title>Result Test Task</title>
 </head>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'root', 'mrfish') or die(mysqli_error($mysqli));
+require('/home/phpprogr/domains/phpprogrammer.in.ua/public_html/test/connect.php');
 $result = $mysqli->query("SELECT * FROM partners") or die($mysqli->error);
 ?>
 
@@ -21,16 +21,16 @@ $result = $mysqli->query("SELECT * FROM partners") or die($mysqli->error);
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <ul class="nav nav-pills ">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/TZ/">List Partners</a>
+                    <a class="nav-link" aria-current="page" href="/">List Partners</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/TZ/create.php">Add Partner</a>
+                    <a class="nav-link active" href="/create.php">Add Partner</a>
                 </li>
                 
             </ul>
         </nav>
 
-        <h1 class="text-center">Add new partner</h1>
+        <h1 class="text-primary text-center">Add new partner</h1>
 
         <div class="row justify-content-center align-items-center">
             <form class="col-md-6 col-md-offset-3" action="create-api.php" method="POST">
@@ -59,6 +59,85 @@ $result = $mysqli->query("SELECT * FROM partners") or die($mysqli->error);
         </div>
 
     </div>
+    <div class="container my-5">
+        <!-- Footer -->
+        <footer class="text-center text-lg-start text-white" style="background-color: #929fba">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: Links -->
+                <section class="">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">
+                                Volodymyr Vi
+                            </h6>
+                            <p>
+                                PHP Developer.
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+                            <p>
+                                <a href="https://github.com/VolodymyrVi" target="_blank" class="text-white">GitHub</a>
+                            </p>
+                            <p>
+                                <a href="https://phpprogrammer.in.ua" target="_blank" class="text-white">Portfolio PHP</a>
+                            </p>
+                            <p>
+                                <a class="text-white">Portfolio Laravel</a>
+                            </p>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                            <p><i class="fas fa-home mr-3"></i> Zhytomyr, 10012, Ukraine</p>
+                            <a href="mailto:sqlphpjs@gmail.com" style="text-decoration: none; color:white"><i class="fas fa-envelope mr-3"></i> sqlphpjs@gmail.com</a><br>
+                            <a href="tel:+380970267764" style="text-decoration: none; color:white"><i class="mt-3 fas fa-phone mr-3"></i>+380970267764</a>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+                            <!-- Linkedin -->
+                            <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="https://www.linkedin.com/in/vlodymyrvi/" target="_blank" role="button"><i class="fab fa-linkedin-in"></i></a>
+                            <!-- Github -->
+                            <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="https://github.com/VolodymyrVi" target="_blank" role="button"><i class="fab fa-github"></i></a>
+                            <!-- Telegram -->
+                            <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="https://t.me/VolodymyrVi" target="_blank" role="button"><i class="fab fa-telegram"></i></a>
+                        </div>
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2021 Copyright:
+                <a class="text-white" href="https://phpprogrammer.in.ua">VolodymyrVi</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </div>
+    <!-- End of .container -->
 
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
